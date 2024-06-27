@@ -168,7 +168,7 @@ We love collaboration! If you'd like to contribute to the Spotify Music Download
 
 
 ## Issues and Feedback 🐛
-Encountered a bug or have some feedback? Open an issue on [GitHub Issues](https://github.com/AsHfIEXE/Spotify-music-downloader-/issues). We'd love to hear from you!
+Encountered a bug or have some feedback? Open an issue on [GitHub Issues](https://github.com/AsHfIEXE/Spotify-Music-Downloader/issues). We'd love to hear from you!
 ## Acknowledgements 
 
 Made with ![](https://img.shields.io/badge/Spotify-1DB954.svg?style=for-the-badge&logo=Spotify&logoColor=white)              ![](https://img.shields.io/badge/Python-3776AB.svg?style=for-the-badge&logo=Python&logoColor=white)
