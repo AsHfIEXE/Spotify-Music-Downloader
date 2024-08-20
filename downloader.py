@@ -121,16 +121,17 @@ class Downloader:
             )
         return download_queue
 
-    def get_sanitized_string(self, dirty_string: str, is_folder: bool) -> str:
-        dirty_string = re.sub(self.ILLEGAL_CHARACTERS_REGEX, "_", dirty_string)
-        if is_folder:
-            dirty_string = dirty_string[: self.truncate]
-            if dirty_string.endswith("."):
-                dirty_string = dirty_string[:-1] + "_"
-        else:
-            if self.truncate is not None:
-                dirty_string = dirty_string[: self.truncate - 4]
-        return dirty_string.strip()
+ def get_sanitized_string(self, dirty_string: str, is_folder: bool) -> str:
+    dirty_string = re.sub(self.ILLEGAL_CHARACTERS_REGEX, "_", dirty_string)
+    file_extension = Path(dirty_string).suffix 
+    if is_folder:
+        dirty_string = dirty_string[: self.truncate - len(file_extension)] 
+        if dirty_string.endswith("."):
+            dirty_string = dirty_string[:-1] + "_"
+    else:
+        if self.truncate is not None:
+            dirty_string = dirty_string[: self.truncate - 4]
+    return dirty_string.strip()
 
     def get_release_date_datetime_obj(self, metadata_gid: dict) -> datetime.datetime:
         metadata_gid_release_date = metadata_gid["album"]["date"]
@@ -158,8 +159,9 @@ class Downloader:
         return datetime_obj.strftime(self.date_tag_template)
 
     def get_artist(self, artist_list: list[dict]) -> str:
-        if len(artist_list) == 1:
-            return artist_list[0]["name"]
+    if len(artist_list) == 1:
+        return artist_list[0]["name"]
+    else:
         return (
             ", ".join(i["name"] for i in artist_list[:-1])
             + f' & {artist_list[-1]["name"]}'
