@@ -133,7 +133,8 @@ class Downloader:
             dirty_string = dirty_string[: self.truncate - 4]
     return dirty_string.strip()
 
-    def get_release_date_datetime_obj(self, metadata_gid: dict) -> datetime.datetime:
+def get_release_date_datetime_obj(self, metadata_gid: dict) -> datetime.datetime:
+    try:
         metadata_gid_release_date = metadata_gid["album"]["date"]
         if metadata_gid_release_date.get("day"):
             datetime_obj = datetime.datetime(
@@ -154,7 +155,10 @@ class Downloader:
                 day=1,
             )
         return datetime_obj
-
+    except KeyError:
+        # Handle the case where 'album' or 'date' is missing 
+        # Return a default datetime or raise an exception if desired
+        return datetime.datetime.now()  # Or raise an exception 
     def get_release_date_tag(self, datetime_obj: datetime.datetime) -> str:
         return datetime_obj.strftime(self.date_tag_template)
 
