@@ -190,7 +190,7 @@ class DownloaderMusicVideo:
         segments = []
         first_segment = base_url + initialization_template_url_formated
         segments.append(first_segment)
-        for i in range(0, int(end_time_millis / 1000) - 1, segment_length): # fixed the off-by-one error
+        for i in range(0, int(end_time_millis / 1000) + 1, segment_length):
             segment_template_url_formated = (
                 segment_template_url.replace("{{profile_id}}", str(profile_id))
                 .replace("{{segment_timestamp}}", str(i))
@@ -217,32 +217,23 @@ class DownloaderMusicVideo:
         release_date_datetime_obj = self.downloader.get_release_date_datetime_obj(
             metadata_gid
         )
-        try:
-            producers = next(
-                role
-                for role in track_credits["roleCredits"]
-                if role["roleTitle"] == "Producers"
-            )["artists"]
-        except StopIteration:
-            producers = None
-
-        try:
-            composers = next(
-                role
-                for role in track_credits["roleCredits"]
-                if role["roleTitle"] == "Writers"
-            )["artists"]
-        except StopIteration:
-            composers = None
-
-        if album_metadata.get("copyrights"): # fixed missing error handling
-            copyright = next((i["text"] for i in album_metadata["copyrights"] if i["type"] == "P"), None)
-        else:
-            copyright = None
+        producers = next(
+            role
+            for role in track_credits["roleCredits"]
+            if role["roleTitle"] == "Producers"
+        )["artists"]
+        composers = next(
+            role
+            for role in track_credits["roleCredits"]
+            if role["roleTitle"] == "Writers"
+        )["artists"]
         tags = {
             "artist": self.downloader.get_artist(metadata_gid["artist"]),
             "composer": self.downloader.get_artist(composers) if composers else None,
-            "copyright": copyright,
+            "copyright": next(
+                (i["text"] for i in album_metadata["copyrights"] if i["type"] == "P"),
+                None,
+            ),
             "isrc": isrc.get("id") if isrc is not None else None,
             "label": metadata_gid["album"].get("label"),
             "media_type": 6,

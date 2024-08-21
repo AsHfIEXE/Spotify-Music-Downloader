@@ -1,0 +1,5 @@
+click
+pybase62
+pywidevine
+pyyaml
+yt-dlp

@@ -1,0 +1,18 @@
+[project]
+name = "Spotify-Music-Downloader"
+description = "This is a Spotify song downloader made with python."
+requires-python = ">=3.8"
+authors = [{ name = "AsHfIEXE" }]
+dependencies = ["click", "pybase62", "pywidevine", "pyyaml", "yt-dlp"]
+readme = "README.md"
+dynamic = ["version"]
+
+[project.urls]
+repository = "https://github.com/AsHfIEXE/Spotify-Music-Downloader"
+
+[build-system]
+requires = ["flit_core"]
+build-backend = "flit_core.buildapi"
+
+[project.scripts]
+spotify-web-downloader = "spotify_Music_downloader.cli:main"
