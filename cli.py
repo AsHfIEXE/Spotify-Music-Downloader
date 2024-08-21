@@ -410,7 +410,10 @@ def main(
                 if download_music_video:
                     music_video_id = (
                         downloader_music_video.get_music_video_id_from_song_id(
-                            track_id, queue_item.metadata["artists"][0]["id"]
+                            track_id,
+                            queue_item.metadata["artists"][0]["id"]
+                            if queue_item.metadata.get("artists")
+                            else None,
                         )
                     )
                     if not music_video_id:
@@ -595,15 +598,24 @@ def main(
                         downloader.apply_tags(remuxed_path, tags, cover_url)
                         logger.debug(f'Moving to "{final_path}"')
                         downloader.move_to_final_path(remuxed_path, final_path)
-                    if save_cover:
-                        cover_path = downloader_music_video.get_cover_path(final_path)
-                        if cover_path.exists() and not overwrite:
-                            logger.debug(
-                                f'Cover already exists at "{cover_path}", skipping'
-                            )
-                        else:
-                            logger.debug(f'Saving cover to "{cover_path}"')
-                            downloader.save_cover(cover_path, cover_url)
+                    if no_lrc or not lyrics.synced:
+                        pass
+                    elif lrc_path.exists() and not overwrite:
+                        logger.debug(
+                            f'Synced lyrics already exists at "{lrc_path}", skipping'
+                        )
+                    else:
+                        logger.debug(f'Saving synced lyrics to "{lrc_path}"')
+                        downloader_song.save_lrc(lrc_path, lyrics.synced)
+                    if lrc_only or not save_cover:
+                        pass
+                    elif cover_path.exists() and not overwrite:
+                        logger.debug(
+                            f'Cover already exists at "{cover_path}", skipping'
+                        )
+                    else:
+                        logger.debug(f'Saving cover to "{cover_path}"')
+                        downloader.save_cover(cover_path, cover_url)
             except Exception as e:
                 error_count += 1
                 logger.error(

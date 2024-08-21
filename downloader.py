@@ -121,55 +121,56 @@ class Downloader:
             )
         return download_queue
 
- def get_sanitized_string(self, dirty_string: str, is_folder: bool) -> str:
-    dirty_string = re.sub(self.ILLEGAL_CHARACTERS_REGEX, "_", dirty_string)
-    file_extension = Path(dirty_string).suffix 
-    if is_folder:
-        dirty_string = dirty_string[: self.truncate - len(file_extension)] 
-        if dirty_string.endswith("."):
-            dirty_string = dirty_string[:-1] + "_"
-    else:
-        if self.truncate is not None:
-            dirty_string = dirty_string[: self.truncate - 4]
-    return dirty_string.strip()
-
-def get_release_date_datetime_obj(self, metadata_gid: dict) -> datetime.datetime:
-    try:
-        metadata_gid_release_date = metadata_gid["album"]["date"]
-        if metadata_gid_release_date.get("day"):
-            datetime_obj = datetime.datetime(
-                year=metadata_gid_release_date["year"],
-                month=metadata_gid_release_date["month"],
-                day=metadata_gid_release_date["day"],
-            )
-        elif metadata_gid_release_date.get("month"):
-            datetime_obj = datetime.datetime(
-                year=metadata_gid_release_date["year"],
-                month=metadata_gid_release_date["month"],
-                day=1,
-            )
+    def get_sanitized_string(self, dirty_string: str, is_folder: bool) -> str:
+        dirty_string = re.sub(self.ILLEGAL_CHARACTERS_REGEX, "_", dirty_string)
+        file_extension = Path(dirty_string).suffix
+        if is_folder:
+            dirty_string = dirty_string[: self.truncate - len(file_extension)]
+            if dirty_string.endswith("."):
+                dirty_string = dirty_string[:-1] + "_"
         else:
-            datetime_obj = datetime.datetime(
-                year=metadata_gid_release_date["year"],
-                month=1,
-                day=1,
-            )
-        return datetime_obj
-    except KeyError:
-        # Handle the case where 'album' or 'date' is missing 
-        # Return a default datetime or raise an exception if desired
-        return datetime.datetime.now()  # Or raise an exception 
+            if self.truncate is not None:
+                dirty_string = dirty_string[: self.truncate - 4]
+        return dirty_string.strip()
+
+    def get_release_date_datetime_obj(self, metadata_gid: dict) -> datetime.datetime:
+        try:
+            metadata_gid_release_date = metadata_gid["album"]["date"]
+            if metadata_gid_release_date.get("day"):
+                datetime_obj = datetime.datetime(
+                    year=metadata_gid_release_date["year"],
+                    month=metadata_gid_release_date["month"],
+                    day=metadata_gid_release_date["day"],
+                )
+            elif metadata_gid_release_date.get("month"):
+                datetime_obj = datetime.datetime(
+                    year=metadata_gid_release_date["year"],
+                    month=metadata_gid_release_date["month"],
+                    day=1,
+                )
+            else:
+                datetime_obj = datetime.datetime(
+                    year=metadata_gid_release_date["year"],
+                    month=1,
+                    day=1,
+                )
+            return datetime_obj
+        except KeyError:
+            # Handle the case where 'album' or 'date' is missing
+            # Return a default datetime or raise an exception if desired
+            return datetime.datetime.now()  # Or raise an exception
+
     def get_release_date_tag(self, datetime_obj: datetime.datetime) -> str:
         return datetime_obj.strftime(self.date_tag_template)
 
     def get_artist(self, artist_list: list[dict]) -> str:
-    if len(artist_list) == 1:
-        return artist_list[0]["name"]
-    else:
-        return (
-            ", ".join(i["name"] for i in artist_list[:-1])
-            + f' & {artist_list[-1]["name"]}'
-        )
+        if len(artist_list) == 1:
+            return artist_list[0]["name"]
+        else:
+            return (
+                ", ".join(i["name"] for i in artist_list[:-1])
+                + f' & {artist_list[-1]["name"]}'
+            )
 
     def get_cover_url(self, metadata_gid: dict, size: str) -> str:
         return "https://i.scdn.co/image/" + next(

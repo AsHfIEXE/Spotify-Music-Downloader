@@ -92,26 +92,29 @@ class DownloaderSong:
         album_metadata: dict,
         track_credits: dict,
         lyrics_unsynced: str,
-    ) -> dict:
-        isrc = None
-        if metadata_gid.get("external_id"):
-            isrc = next(
-                (i for i in metadata_gid["external_id"] if i["type"] == "isrc"), None
-            )
-        release_date_datetime_obj = self.downloader.get_release_date_datetime_obj(
-            metadata_gid
-        )
-        producers = next(
-            role
-            for role in track_credits["roleCredits"]
-            if role["roleTitle"] == "Producers"
-        )["artists"]
-        composers = next(
-            role
-            for role in track_credits["roleCredits"]
-            if role["roleTitle"] == "Writers"
-        )["artists"]
-        tags = {
+@@ -180,13 +184,17 @@
+         release_date_datetime_obj = self.downloader.get_release_date_datetime_obj(
+             metadata_gid
+         )
+-        producers = next(
++        producers = (
+             role
+-            for role in track_credits["roleCredits"]
++            for role in (
++                track_credits["roleCredits"] if track_credits.get("roleCredits") else []
++            )
+             if role["roleTitle"] == "Producers"
+         )["artists"]
+-        composers = next(
++        composers = (
+             role
+-            for role in track_credits["roleCredits"]
++            for role in (
++                track_credits["roleCredits"] if track_credits.get("roleCredits") else []
++            )
+             if role["roleTitle"] == "Writers"
+         )["artists"]
+         tags = {
             "album": album_metadata["name"],
             "album_artist": self.downloader.get_artist(album_metadata["artists"]),
             "artist": self.downloader.get_artist(metadata_gid["artist"]),
