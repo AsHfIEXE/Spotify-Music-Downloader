@@ -1,6 +1,6 @@
 
 ![](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)![GitHub top language](https://img.shields.io/github/languages/top/AsHfIEXE/Spotify-Music-Downloader?style=for-the-badge)
- ![GitHub Downloads )](https://img.shields.io/github/downloads/AsHfIEXE/Spotify-Music-Downloader/total) ![](https://img.shields.io/github/last-commit/AsHfIEXE/Spotify-Music-Downloader/main?display_timestamp=author&style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/AsHfIEXE/Spotify-Music-Downloader?style=for-the-badge)![GitHub Discussions](https://img.shields.io/github/discussions/AsHfIEXE/Spotify-Music-Downloader?style=for-the-badge)
+ ![GitHub Downloads )](https://img.shields.io/github/downloads/glomatico/spotify-web-downloader/total) ![](https://img.shields.io/github/last-commit/AsHfIEXE/Spotify-Music-Downloader/main?display_timestamp=author&style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/AsHfIEXE/Spotify-Music-Downloader?style=for-the-badge)![GitHub Discussions](https://img.shields.io/github/discussions/AsHfIEXE/Spotify-Music-Downloader?style=for-the-badge)
 
 
 
