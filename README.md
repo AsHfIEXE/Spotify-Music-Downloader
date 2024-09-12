@@ -21,6 +21,8 @@ Welcome to the Spotify Music Downloader project! Dive into the world of offline 
 ## Prerequisites 📋
 
 - Python 3.8 or higher
+- A .wvd file
+A .wvd file contains the Widevine keys from a device. The easiest method of obtaining one is using KeyDive, which extracts it from an Android device. Detailed instructions can be found here: https://github.com/hyugogirubato/KeyDive.
 - The cookies file of your Spotify account (free or premium)
 - You can get your cookies by using one of the following extensions on your browser of choice at the Spotify website with your account signed in:
 - Firefox: https://addons.mozilla.org/addon/export-cookies-txt
@@ -38,7 +40,7 @@ Welcome to the Spotify Music Downloader project! Dive into the world of offline 
 ```bash
   pip install spotify-web-downloader
 ```
-2. Place your cookies file in the directory from which you will be running spotify-web-downloader and name it `cookies.txt`.
+2. Place your cookies file in the directory from which you will be running spotify-web-downloader and name it `cookies.txt`and `device.wvd` respectively.
 
 
 
