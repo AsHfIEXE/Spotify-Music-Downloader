@@ -55,7 +55,7 @@ spotify-web-downloader [OPTIONS] URLS...
 
 
 
-## Demo
+## Demo   
 
 - Download song/Track/Playlist
 ```bash
