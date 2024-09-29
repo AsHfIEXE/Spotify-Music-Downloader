@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='spotify-music-downloader',
-    version='1.2.0',  # Update version as needed
+    version='1.9.0',  
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -14,7 +14,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'spotify-downloader=your_module.your_script:main',  # Update with your module and function names
+            'spotify-downloader=your_module.your_script:main',  
         ],
     },
     url='https://github.com/AsHfIEXE/Spotify-Music-Downloader',
@@ -29,5 +29,5 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.8',
+    python_requires='>=3.9',
 )
